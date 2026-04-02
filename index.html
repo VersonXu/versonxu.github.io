@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="https://www.img520.com/eQloPm.png" type="image/png">
+    <title>臻源（北京）国际旅行社有限公司 - 专业出入境、旅游、涉外服务</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Microsoft YaHei", sans-serif;
+        }
+
+        /* 语言下拉列表样式 - 适配国旗图标 */
+        .lang-dropdown {
+            position: fixed;
+            top: 4px;
+            right: 1%;
+            z-index: 1000;
+            width: 100px; /* 加宽适配国旗+文字 */
+        }
+
+        /* 下拉按钮样式 */
+        .lang-dropdown-btn {
+            width: 100%;
+            padding: 3px 8px;
+            border: 1px solid #ddd;
+            background: white;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s;
+        }
+
+        .lang-dropdown-btn:hover {
+            background: #f5f5f5;
+        }
+
+        /* 国旗图标通用样式 */
+        .flag-icon {
+            width: 16px; /* 国旗尺寸 */
+            height: 12px;
+            margin-right: 5px;
+            border-radius: 1px; /* 轻微圆角更美观 */
+            vertical-align: middle;
+        }
+
+        /* 下拉箭头 */
+        .lang-arrow {
+            font-size: 8px;
+            transition: transform 0.3s;
+        }
+
+        .lang-arrow.rotate {
+            transform: rotate(180deg);
+        }
+
+        /* 下拉列表容器 */
+        .lang-dropdown-list {
+            width: 100%;
+            list-style: none;
+            background: white;
+            border: 1px solid #ddd;
+            border-top: none;
+            border-radius: 0 0 4px 4px;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            display: none;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        /* 下拉列表项 - 适配国旗排版 */
+        .lang-dropdown-item {
+            padding: 3px 8px;
+            cursor: pointer;
+            transition: background 0.3s;
+            font-size: 12px;
+            display: flex; /* 国旗+文字水平对齐 */
+            align-items: center;
+        }
+
+        .lang-dropdown-item:hover {
+            background: #f0f7ff;
+        }
+
+        .lang-dropdown-item.active {
+            color: #42a5f5;
+            font-weight: bold;
+        }
+
+        /* 导航栏 */
+        nav {
+            background: #222;
+            color: white;
+            padding: 18px 5%;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 999;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-right: 5%;
+        }
+
+        /* 导航栏logo区域 */
+        .logo {
+            font-size: 22px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+        }
+
+        .logo-img {
+            width: 40px;
+            height: 40px;
+            border-radius: 3px;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            margin-left: 25px;
+            font-size: 16px;
+        }
+
+        .nav-links a:hover {
+            color: #42a5f5;
+        }
+
+        /* 横幅 */
+        .banner {
+            margin-top: 70px;
+            height: 550px;
+            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.6)), url('https://picsum.photos/1920/1080?travel');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            text-align: center;
+            padding: 0 20px;
+        }
+
+        .banner h1 {
+            font-size: 46px;
+            margin-bottom: 15px;
+        }
+
+        .banner p {
+            font-size: 18px;
+            max-width: 700px;
+            margin-bottom: 30px;
+        }
+
+        .btn {
+            padding: 12px 30px;
+            background: #42a5f5;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .btn:hover {
+            background: #1e88e5;
+        }
+
+        /* 通用区块样式 */
+        .section {
+            padding: 80px 5%;
+            text-align: center;
+        }
+
+        .section h2 {
+            font-size: 32px;
+            margin-bottom: 15px;
+            color: #333;
+        }
+
+        .section .desc {
+            color: #666;
+            max-width: 700px;
+            margin: 0 auto 50px;
+            line-height: 1.8;
+        }
+
+        /* 服务卡片 */
+        .services {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 30px;
+        }
+
+        .card {
+            width: 300px;
+            padding: 35px 20px;
+            border: 1px solid #eee;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .card h3 {
+            margin: 15px 0;
+            color: #333;
+        }
+
+        .card p {
+            color: #666;
+            line-height: 1.6;
+        }
+
+        /* 关于我们 */
+        .about {
+            background: #f7f9fc;
+        }
+
+        /* 联系我们 */
+        .contact {
+            background: #222;
+            color: white;
+        }
+
+        .contact h2, .contact .desc {
+            color: white;
+        }
+
+        .contact-info {
+            margin-top: 30px;
+            font-size: 16px;
+            line-height: 2;
+        }
+
+        /* 底部 */
+        footer {
+            background: #111;
+            color: #aaa;
+            text-align: center;
+            padding: 25px 0;
+            font-size: 14px;
+        }
+
+        /* 手机适配 */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            .banner h1 {
+                font-size: 32px;
+            }
+            .lang-dropdown {
+                right: 1%;
+                width: 95px; /* 手机端适配 */
+            }
+            .lang-dropdown-btn {
+                padding: 2px 6px;
+                font-size: 11px;
+            }
+            .lang-dropdown-item {
+                padding: 2px 6px;
+                font-size: 11px;
+            }
+            .flag-icon {
+                width: 14px; /* 手机端国旗缩小 */
+                height: 10px;
+            }
+            .services {
+                gap: 20px;
+            }
+            .card {
+                width: 100%;
+                max-width: 300px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 语言下拉列表（含稳定国旗链接） -->
+    <div class="lang-dropdown">
+        <button class="lang-dropdown-btn" id="langBtn">
+            <span id="currentLang">
+                <img src="https://lipis.github.io/flag-icons/flags/4x3/cn.svg" class="flag-icon" alt="中国国旗">
+                简体中文
+            </span>
+            <span class="lang-arrow">▼</span>
+        </button>
+        <ul class="lang-dropdown-list" id="langList">
+            <li class="lang-dropdown-item active" data-lang="zh">
+                <img src="https://lipis.github.io/flag-icons/flags/4x3/cn.svg" class="flag-icon" alt="中国国旗">
+                简体中文
+            </li>
+            <li class="lang-dropdown-item" data-lang="en">
+                <img src="https://lipis.github.io/flag-icons/flags/4x3/gb.svg" class="flag-icon" alt="英国国旗">
+                English
+            </li>
+            <li class="lang-dropdown-item" data-lang="jp">
+                <img src="https://lipis.github.io/flag-icons/flags/4x3/jp.svg" class="flag-icon" alt="日本国旗">
+                日本語
+            </li>
+        </ul>
+    </div>
+
+    <!-- 导航栏 -->
+    <nav>
+        <div class="logo" id="backToTopTrigger" title="返回顶部">
+            <img src="https://www.img520.com/eQloPm.png" alt="臻源旅行商标" class="logo-img">
+            <span class="text-logo zh">臻源（北京）国际旅行社</span>
+            <span class="text-logo en" style="display: none;">ZhenYuan (Beijing) International Travel Service</span>
+            <span class="text-logo jp" style="display: none;">臻源（北京）国際旅行社</span>
+        </div>
+        <div class="nav-links">
+            <a href="#home" class="zh">首页</a>
+            <a href="#home" class="en" style="display: none;">Home</a>
+            <a href="#home" class="jp" style="display: none;">ホーム</a>
+            
+            <a href="#about" class="zh">关于我们</a>
+            <a href="#about" class="en" style="display: none;">About Us</a>
+            <a href="#about" class="jp" style="display: none;">会社概要</a>
+            
+            <a href="#service" class="zh">服务项目</a>
+            <a href="#service" class="en" style="display: none;">Services</a>
+            <a href="#service" class="jp" style="display: none;">サービス内容</a>
+            
+            <a href="#contact" class="zh">联系我们</a>
+            <a href="#contact" class="en" style="display: none;">Contact Us</a>
+            <a href="#contact" class="jp" style="display: none;">お問い合わせ</a>
+        </div>
+    </nav>
+
+    <!-- 首页横幅 -->
+    <section class="banner" id="home">
+        <h1 class="zh">臻源旅行 · 畅享全球</h1>
+        <h1 class="en" style="display: none;">ZhenYuan Travel · Enjoy the World</h1>
+        <h1 class="jp" style="display: none;">臻源旅行・世界を楽しむ</h1>
+        
+        <p class="zh">专业提供旅游业务、出入境中介、出国留学・商务考察中介、货物・技术进出口等服务，一站式解决您的出行与涉外需求</p>
+        <p class="en" style="display: none;">We professionally provide travel services, entry-exit intermediary services, study abroad & business inspection intermediary services, goods & technology import and export services, providing one-stop solutions for your travel and foreign-related needs</p>
+        <p class="jp" style="display: none;">旅行業務、出入国仲介、海外留学・商務調査仲介、貨物・技術輸入輸出などのサービスを専門的に提供し、旅行および海外関連ニーズに対するワンストップソリューションを提供します</p>
+        
+        <a href="#contact" class="btn zh">立即咨询</a>
+        <a href="#contact" class="btn en" style="display: none;">Consult Now</a>
+        <a href="#contact" class="btn jp" style="display: none;">すぐに相談</a>
+    </section>
+
+    <!-- 关于我们 -->
+    <section class="section about" id="about">
+        <h2 class="zh">关于我们</h2>
+        <h2 class="en" style="display: none;">About Us</h2>
+        <h2 class="jp" style="display: none;">会社概要</h2>
+        
+        <p class="desc zh">臻源（北京）国际旅行社有限公司专注于旅游服务、出入境中介、企业咨询等多元化业务，凭借专业的服务团队和丰富的行业经验，为客户提供安全、高效、定制化的涉外与商旅解决方案。</p>
+        <p class="desc en" style="display: none;">ZhenYuan (Beijing) International Travel Service Co., Ltd. focuses on diversified businesses such as travel services, entry-exit intermediary services, and corporate consulting. With a professional service team and rich industry experience, we provide customers with safe, efficient and customized solutions for foreign-related and business travel needs.</p>
+        <p class="desc jp" style="display: none;">臻源（北京）国際旅行株式会社は、旅行サービス、出入国仲介、企業コンサルティングなどの多角的な事業に特化し、専門的なサービスチームと豊富な業界経験を活かし、顧客に安全かつ効率的、カスタマイズされた海外関連・商務旅行ソリューションを提供します。</p>
+    </section>
+
+    <!-- 服务项目 -->
+    <section class="section" id="service">
+        <h2 class="zh">我们的服务</h2>
+        <h2 class="en" style="display: none;">Our Services</h2>
+        <h2 class="jp" style="display: none;">当社のサービス</h2>
+        
+        <p class="desc zh">覆盖旅游、出入境商务考察、货物・技术进出口、咨询等多领域的一站式服务</p>
+        <p class="desc en" style="display: none;">One-stop services covering travel, entry-exit business inspection, goods & technology import and export, consulting and other fields</p>
+        <p class="desc jp" style="display: none;">旅行、出入国商務調査、貨物・技術輸入輸出、コンサルティングなど多岐にわたる分野をカバーするワンストップサービス</p>
+
+        <div class="services">
+            <div class="card">
+                <h3 class="zh">旅游业务</h3>
+                <h3 class="en" style="display: none;">Travel Services</h3>
+                <h3 class="jp" style="display: none;">旅行業務</h3>
+                
+                <p class="zh">定制化国内外旅游线路、入境・境内旅游、个人出行规划，接送机包车等专业旅游服务</p>
+                <p class="en" style="display: none;">Customized domestic and international travel routes, inbound & domestic tourism, personal travel planning, airport transfer and chartered car services and other professional travel services</p>
+                <p class="jp" style="display: none;">カスタマイズされた国内外の旅行ルート、入国・国内旅行、個人旅行プランニング、空港送迎・専用車などの専門的な旅行サービス</p>
+            </div>
+            <div class="card">
+                <h3 class="zh">出入境服务与商务考察业务</h3>
+                <h3 class="en" style="display: none;">Entry-Exit & Business Inspection Services</h3>
+                <h3 class="jp" style="display: none;">出入国サービス・商務調査業務</h3>
+                
+                <p class="zh">出入境咨询与代办、出国留学中介、签证办理、商务考察等服务</p>
+                <p class="en" style="display: none;">Entry-exit consultation and agency, study abroad intermediary, visa processing, business inspection and other services</p>
+                <p class="jp" style="display: none;">出入国の相談・代理、海外留学仲介、ビザ申請、商務調査などのサービス</p>
+            </div>
+            <div class="card">
+                <h3 class="zh">货物・技术进出口</h3>
+                <h3 class="en" style="display: none;">Goods & Technology Import & Export</h3>
+                <h3 class="jp" style="display: none;">貨物・技術輸出輸入</h3>
+                
+                <p class="zh">货物进出口、技术进出口等配套服务</p>
+                <p class="en" style="display: none;">Supporting services such as goods import and export, technology import and export</p>
+                <p class="jp" style="display: none;">貨物輸入輸出、技術輸入輸出などの付帯サービス</p>
+            </div>
+            <div class="card">
+                <h3 class="zh">综合咨询服务</h3>
+                <h3 class="en" style="display: none;">Comprehensive Consulting Services</h3>
+                <h3 class="jp" style="display: none;">総合コンサルティングサービス</h3>
+                
+                <p class="zh">企业商务、体检、翻译等配套服务</p>
+                <p class="en" style="display: none;">Supporting services such as corporate business, physical examination, translation services</p>
+                <p class="jp" style="display: none;">企業ビジネス、健康診断、翻訳などの付帯サービス</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 联系我们 -->
+    <section class="section contact" id="contact">
+        <h2 class="zh">联系我们</h2>
+        <h2 class="en" style="display: none;">Contact Us</h2>
+        <h2 class="jp" style="display: none;">お問い合わせ</h2>
+        
+        <p class="desc zh">欢迎随时与我们取得联系，我们将尽快回复您</p>
+        <p class="desc en" style="display: none;">Welcome to contact us at any time, we will reply to you as soon as possible</p>
+        <p class="desc jp" style="display: none;">いつでもお問い合わせください、迅速にご返答いたします</p>
+        
+        <div class="contact-info">
+            <p class="zh">电话：xxx xxxx xxxx<br>邮箱：zhenyuanguolv@gmail.com<br>地址：北京市朝阳区五里桥二街 1 号院 6 号楼 6 层</p>
+            <p class="en" style="display: none;">Tel: xxx xxxx xxxx<br>Email: zhenyuanguolv@gmail.com<br>Address: 6th Floor, Building 6, Courtyard 1, Wuliqiao 2nd Street, Chaoyang District, Beijing</p>
+            <p class="jp" style="display: none;">電話：xxx xxxx xxxx<br>メール：zhenyuanguolv@gmail.com<br>住所：北京市朝阳区五里橋二街1号院6号棟6階</p>
+        </div>
+    </section>
+
+    <!-- 底部 -->
+    <footer>
+        <p class="zh">© 2026 臻源（北京）国际旅行社有限公司 版权所有</p>
+        <p class="en" style="display: none;">© 2026 ZhenYuan (Beijing) International Travel Service Co., Ltd. All Rights Reserved</p>
+        <p class="jp" style="display: none;">© 2026 臻源（北京）国際旅行サービス株式会社 全著作権所有</p>
+    </footer>
+
+    <script>
+        // 语言切换核心逻辑（适配国旗显示）
+        const langBtn = document.getElementById('langBtn');
+        const langList = document.getElementById('langList');
+        const langItems = document.querySelectorAll('.lang-dropdown-item');
+        const currentLangText = document.getElementById('currentLang');
+        const langArrow = document.querySelector('.lang-arrow');
+        const langElements = {
+            zh: document.querySelectorAll('.zh'),
+            en: document.querySelectorAll('.en'),
+            jp: document.querySelectorAll('.jp')
+        };
+        // 国旗图片地址映射（稳定源）
+        /*
+        中国：https://lipis.github.io/flag-icons/flags/4x3/cn.svg
+        英国：https://lipis.github.io/flag-icons/flags/4x3/gb.svg
+        日本：https://lipis.github.io/flag-icons/flags/4x3/jp.svg
+        */
+        const flagMap = {
+            zh: 'https://lipis.github.io/flag-icons/flags/4x3/cn.svg',
+            en: 'https://lipis.github.io/flag-icons/flags/4x3/gb.svg',
+            jp: 'https://lipis.github.io/flag-icons/flags/4x3/jp.svg'
+            /*
+            zh: 'images/flags/cn.svg',
+            en: 'images/flags/gb.svg',
+            jp: 'images/flags/jp.svg'
+            */
+        };
+        // 语言名称映射
+        const langNameMap = {
+            zh: '简体中文',
+            en: 'English',
+            jp: '日本語'
+        };
+        const backToTopTrigger = document.getElementById('backToTopTrigger');
+        let currentLang = 'zh';
+
+        // 点击左上角标题和图片返回页面顶部
+        backToTopTrigger.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+
+        // 切换下拉列表显示/隐藏
+        langBtn.addEventListener('click', () => {
+            langList.style.display = langList.style.display === 'block' ? 'none' : 'block';
+            langArrow.classList.toggle('rotate');
+        });
+
+        // 点击外部关闭下拉
+        document.addEventListener('click', (e) => {
+            if (!langBtn.contains(e.target) && !langList.contains(e.target)) {
+                langList.style.display = 'none';
+                langArrow.classList.remove('rotate');
+            }
+        });
+
+        // 切换语言函数（更新国旗+文字）
+        function switchLang(targetLang) {
+            // 隐藏所有语言内容
+            Object.keys(langElements).forEach(lang => {
+                langElements[lang].forEach(el => {
+                    el.style.display = 'none';
+                });
+            });
+            // 显示目标语言内容
+            langElements[targetLang].forEach(el => {
+                if (el.tagName === 'A' || el.tagName === 'BUTTON' || el.tagName === 'H1' || el.tagName === 'H2' || el.tagName === 'H3') {
+                    el.style.display = 'inline-block';
+                } else if (el.tagName === 'P' || el.tagName === 'SPAN') {
+                    el.style.display = 'block';
+                } else {
+                    el.style.display = 'block';
+                }
+            });
+            // 更新下拉按钮的国旗+文字
+            currentLang = targetLang;
+            currentLangText.innerHTML = `
+                <img src="${flagMap[targetLang]}" class="flag-icon" alt="${langNameMap[targetLang]}国旗">
+                ${langNameMap[targetLang]}
+            `;
+            // 更新页面标题
+            if (targetLang === 'zh') {
+                document.title = '臻源（北京）国际旅行社有限公司 - 专业出入境、旅游、涉外服务';
+            } else if (targetLang === 'en') {
+                document.title = 'ZhenYuan (Beijing) International Travel Service - Professional Entry-Exit, Travel, Foreign-related Services';
+            } else if (targetLang === 'jp') {
+                document.title = '臻源（北京）国際旅行サービス - 専門的な出入国、旅行、海外関連サービス';
+            }
+            // 更新下拉列表选中状态
+            langItems.forEach(item => {
+                item.classList.remove('active');
+                if (item.dataset.lang === targetLang) {
+                    item.classList.add('active');
+                }
+            });
+            // 关闭下拉列表
+            langList.style.display = 'none';
+            langArrow.classList.remove('rotate');
+        }
+
+        // 绑定下拉列表项点击事件
+        langItems.forEach(item => {
+            item.addEventListener('click', () => {
+                switchLang(item.dataset.lang);
+            });
+        });
+
+        // 初始默认显示中文
+        switchLang('zh');
+    </script>
+</body>
+</html>
