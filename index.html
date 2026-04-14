@@ -1,21 +1,10 @@
 <!DOCTYPE html>
-<html lang="zh-CN" style="scroll-behavior: auto;">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="apple-mobile-web-app-capable" content="yes">
     <link rel="icon" href="images/logos/zhenyuan-logo.png" type="image/png">
     <title>臻源（北京）国际旅行社有限公司 - 专业出入境、旅游、涉外服务</title>
-    <script>
-        // 防止浏览器自动恢复滚动位置（特别是手机Safari）
-        if ('scrollRestoration' in window.history) {
-            window.history.scrollRestoration = 'manual';
-        }
-        // 立即设置滚动位置到顶部
-        window.scrollY = 0;
-        document.documentElement.scrollTop = 0;
-        document.body.scrollTop = 0;
-    </script>
+
     <style>
         * {
             margin: 0;
@@ -109,7 +98,7 @@
         nav {
             background: #222;
             color: white;
-            padding: 12px 5%;
+            padding: 18px 5%;
             position: fixed;
             width: 100%;
             top: 0;
@@ -117,18 +106,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            height: 75px;
-            box-sizing: border-box;
             padding-right: 5%;
-        }
-
-        .text-logo {
-            font-size: 14px;
-            line-height: 1;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            max-width: 400px;
         }
 
         /* 导航栏logo区域 */
@@ -160,7 +138,7 @@
 
         /* 横幅 */
         .banner {
-            margin-top: 75px;
+            margin-top: 70px;
             height: 550px;
             background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.6)), url('https://picsum.photos/1920/1080?travel');
             background-size: cover;
@@ -575,31 +553,6 @@
         // 初始默认显示中文
         switchLang('zh');
 
-        // 确保页面初始化时滚动到顶部（多重保障）
-        function scrollToTop() {
-            window.scrollY = 0;
-            document.documentElement.scrollTop = 0;
-            document.body.scrollTop = 0;
-            window.scrollTo({top: 0, left: 0, behavior: 'auto'});
-        }
-        
-        // 在多个时机执行scrollToTop
-        scrollToTop();
-        
-        if (document.readyState === 'loading') {
-            document.addEventListener('DOMContentLoaded', scrollToTop);
-        }
-        window.addEventListener('load', scrollToTop);
-        
-        // 页面获得焦点时也滚动到顶部
-        window.addEventListener('focus', () => {
-            setTimeout(scrollToTop, 100);
-        });
-        
-        // 延迟执行（确保DOM完全渲染）
-        setTimeout(scrollToTop, 50);
-        setTimeout(scrollToTop, 200);
-        setTimeout(scrollToTop, 500);
     </script>
 </body>
 </html>
